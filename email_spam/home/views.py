@@ -13,3 +13,6 @@ def registration(request):
 
 def raise_complaint(request):
     return render(request,'public_pages/raise_complaint.html')
+
+def submit_message(request):
+    return render(request,'public_pages/submit_message.html')
