@@ -18,14 +18,16 @@ class User(models.Model):
 class Message(models.Model):
     USER=models.ForeignKey(User,on_delete=models.CASCADE)
     message_text = models.CharField(max_length=2000)
-    datetime = models.CharField(max_length=255)
+    date_time = models.CharField(max_length=255)
 
 class Feedback(models.Model):
     USER=models.ForeignKey(User,on_delete=models.CASCADE)
     feedback_text = models.CharField(max_length=2000)
-    datetime = models.CharField(max_length=255)
+    date_time = models.CharField(max_length=255)
 
 class Complaint(models.Model):
     USER=models.ForeignKey(User,on_delete=models.CASCADE)
     complaint_text = models.CharField(max_length=2000)
     response = models.CharField(max_length=2000)
+    date_time = models.CharField(max_length=255,default='pending')
+    subject = models.CharField(max_length=255,default='pending')
