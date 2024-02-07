@@ -7,3 +7,6 @@ def public_home(request):
 
 def login(request):
     return render(request,'public_pages/login.html')
+
+def registration(request):
+    return render(request,'public_pages/registration.html')
