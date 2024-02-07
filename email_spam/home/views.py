@@ -10,3 +10,6 @@ def login(request):
 
 def registration(request):
     return render(request,'public_pages/registration.html')
+
+def raise_complaint(request):
+    return render(request,'public_pages/raise_complaint.html')

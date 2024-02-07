@@ -20,5 +20,6 @@ from .import views
 urlpatterns = [
   path('',views.public_home),
   path('login',views.login),
-  path('registration',views.registration)
+  path('registration',views.registration),
+  path('raise_complaint',views.raise_complaint),
 ]
