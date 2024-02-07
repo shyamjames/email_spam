@@ -22,4 +22,5 @@ urlpatterns = [
   path('login',views.login),
   path('registration',views.registration),
   path('raise_complaint',views.raise_complaint),
+  path('submit_message',views.submit_message),
 ]
