@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def public_home(request):
     return render (request,'public_pages/public_home.html')
+
+def login(request):
+    return render(request,'public_pages/login.html')
