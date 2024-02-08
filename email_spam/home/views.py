@@ -1,11 +1,29 @@
+from django.http import HttpResponse
 from django.shortcuts import render
-
+from home.models import *
 # Create your views here.
 
 def public_home(request):
     return render (request,'public_pages/public_home.html')
 
 def login(request):
+    if 'submit' in request.POST:
+        uname = request.POST['username']
+        passwd = request.POST['password']
+        if Login.objects.filter(username=uname,password=passwd).exists():
+            q = Login.objects.get(username=uname, password=passwd)
+            request.session['loginid']=q.pk
+
+            if q.usertype=='admin':
+                return HttpResponse("<script>alert('Login SUccess');window.location='admin_home'</script>")
+            elif q.usertype=='user':
+                f = User.objects.get(LOGIN_id = q.pk)
+                if f:
+                    request.session['userid'] = f.pk
+                    return HttpResponse("<script>alert('Login Success');window.location='public_home'</script>")
+            else:
+                return HttpResponse("<script>alert('Invalid Login');</script>")
+
     return render(request,'public_pages/login.html')
 
 def registration(request):
@@ -19,3 +37,6 @@ def submit_message(request):
 
 def view_history(request):
     return render(request, 'public_pages/view_history.html')
+
+def admin_home(request):
+    return render(request,'admin_pages/admin_home.html')

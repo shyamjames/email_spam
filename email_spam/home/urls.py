@@ -24,4 +24,5 @@ urlpatterns = [
   path('raise_complaint',views.raise_complaint),
   path('submit_message',views.submit_message),
   path('view_history',views.view_history),
+  path('admin_home',views.admin_home),
 ]
