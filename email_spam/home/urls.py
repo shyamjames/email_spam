@@ -25,4 +25,5 @@ urlpatterns = [
   path('submit_message',views.submit_message),
   path('view_history',views.view_history),
   path('admin_home',views.admin_home),
+  path('user_home',views.user_home),
 ]

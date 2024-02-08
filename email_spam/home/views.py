@@ -20,7 +20,7 @@ def login(request):
                 f = User.objects.get(LOGIN_id = q.pk)
                 if f:
                     request.session['userid'] = f.pk
-                    return HttpResponse("<script>alert('Login Success');window.location='public_home'</script>")
+                    return HttpResponse("<script>alert('Login Success');window.location='user_home'</script>")
             else:
                 return HttpResponse("<script>alert('Invalid Login');</script>")
 
@@ -36,9 +36,9 @@ def registration(request):
         password = request.POST['password']
         photo = request.FILES['photo']
         q = Login(username=username,password=password,usertype='user')
-        q.save
+        q.save()
         f = User(firstname=fname,lastname=lname,email=email,phone=phone,photo=photo,LOGIN_id=q.pk)
-        f.save
+        f.save()
         return HttpResponse("<script>alert('Registration Successful');window.location='login'</script>")
     return render(request,'public_pages/registration.html')
 
@@ -53,3 +53,6 @@ def view_history(request):
 
 def admin_home(request):
     return render(request,'admin_pages/admin_home.html')
+
+def user_home(request):
+    return render(request,'public_pages/user_home.html')
