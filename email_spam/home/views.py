@@ -16,3 +16,6 @@ def raise_complaint(request):
 
 def submit_message(request):
     return render(request,'public_pages/submit_message.html')
+
+def view_history(request):
+    return render(request, 'public_pages/view_history.html')
