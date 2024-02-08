@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-lg-8">
                 <div>
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data">
                         <h3><small class="text-muted">User Registration</small>
                         </h3>
                         <br>
@@ -22,11 +22,14 @@
                         <label for="lastname" class="form-label">Lastname</label>
                         <input type="text" name="lastname" class="form-control">
                         <br>
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control">
+                        <br>
                         <label for="phone" class="form-label">Phone</label>
                         <input type="text" name="phone" class="form-control">
                         <br>
                         <label for="Email" class="form-label">Email</label>
-                        <input type="email" name="phone" class="form-control">
+                        <input type="email" name="email" class="form-control">
                         <div name="emailhelp" class="form-text">We'll never share your email with anyone else.</div>
                         <br>
                         <label for="password" class="form-label">Password</label>
@@ -38,7 +41,7 @@
                         <label for="photo" class="form-label">Photo</label>
                         <input type="file" name="photo" class="form-control">
                         <br>
-                        <input class="btn btn-primary" type="submit" value="Submit">
+                        <input class="btn btn-primary" type="submit" name="submit">
                     </form>
                 </div>
             </div>

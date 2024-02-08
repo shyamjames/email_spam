@@ -15,7 +15,7 @@ def login(request):
             request.session['loginid']=q.pk
 
             if q.usertype=='admin':
-                return HttpResponse("<script>alert('Login SUccess');window.location='admin_home'</script>")
+                return HttpResponse("<script>alert('Login Success');window.location='admin_home'</script>")
             elif q.usertype=='user':
                 f = User.objects.get(LOGIN_id = q.pk)
                 if f:
@@ -27,6 +27,19 @@ def login(request):
     return render(request,'public_pages/login.html')
 
 def registration(request):
+    if 'submit' in request.POST:
+        fname = request.POST['firstname']
+        lname = request.POST['lastname']
+        username = request.POST['username']
+        phone = request.POST['phone']
+        email = request.POST['email']
+        password = request.POST['password']
+        photo = request.FILES['photo']
+        q = Login(username=username,password=password,usertype='user')
+        q.save
+        f = User(firstname=fname,lastname=lname,email=email,phone=phone,photo=photo,LOGIN_id=q.pk)
+        f.save
+        return HttpResponse("<script>alert('Registration Successful');window.location='login'</script>")
     return render(request,'public_pages/registration.html')
 
 def raise_complaint(request):
