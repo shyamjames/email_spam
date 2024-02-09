@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from home.models import *
+import datetime
 # Create your views here.
 
 def public_home(request):
@@ -43,6 +44,11 @@ def registration(request):
     return render(request,'public_pages/registration.html')
 
 def raise_complaint(request):
+    date = datetime.datetime.now()
+    if 'submit' in request.POST:
+        subject = request.POST['dropdown_selection']
+        complaint = request.POST['complaint_text']
+        q = Complaint(complaint_text=complaint,subject=subject,date_time=date,USER_id=request.session['user_id'],response='pending')
     return render(request,'public_pages/raise_complaint.html')
 
 def submit_message(request):
