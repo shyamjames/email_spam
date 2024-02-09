@@ -15,17 +15,23 @@
                     <form method="post">
                         <h3 class="text-center">Raise a complaint</h3>
                         <br>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Dropdown button
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownbutton">
-                              <a class="dropdown-item" href="#">Subject 1</a>
-                              <a class="dropdown-item" href="#">Subject 2</a>
-                              <a class="dropdown-item" href="#">Subject 3</a>
-                              <a class="dropdown-item" href="#">Other</a>
+                        <form method="post">
+                            <div class="dropdown">
+                              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown button
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownbutton">
+                                <select name="dropdown_selection">
+                                  <option value="subject1">Subject 1</option>
+                                  <option value="subject2">Subject 2</option>
+                                  <option value="subject3">Subject 3</option>
+                                  <option value="other">Other</option>
+                                </select>
+                              </div>
                             </div>
-                          </div>
+                            <button type="submit">Submit</button>
+                          </form>
+                          
                         <br>
                         <label class="form-label" for="complaint_text">Write your complaint here:</label>
                         <br>
