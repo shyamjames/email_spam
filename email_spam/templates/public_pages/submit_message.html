@@ -9,19 +9,18 @@
 </head>
 <body>
     <br>
-    <h3 class="text-center">Submit a Message for evaluation</h3>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-8 card shadow-lg p-3">
                 <div>
+                    <h3 class="text-center">Submit a Message for evaluation</h3>
                     <form method="post">
-                        
                         <br>
                         <label class="form-label" for="message_text">Enter the message here:</label>
                         <br>
                         <textarea class="form-control" name="message_text"></textarea>
                         <br>
-                        <input type="submit" class="btn btn-primary">
+                        <input type="submit" class="btn btn-primary" name="submit">
                     </form>
                 </div>
             </div>
@@ -30,16 +29,6 @@
     <br><br>
     <div class="container">
         <h4 class="text-center">The message is likely to be</h4>
-    </div>
-
-    <br><br>
-    <br><br>
-    <div class="container">
-        <h3 class="text-muted">Enter feedback(optional)</h3>
-        <label class="form-label" for="feedback_text">Enter the feedback</label>
-        <textarea class="form-control" name="feedback_text"></textarea>
-        <br>
-        <input type="submit" class="btn btn-primary" value="Submit feedback">
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
