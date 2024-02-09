@@ -19,6 +19,7 @@ class Message(models.Model):
     USER=models.ForeignKey(User,on_delete=models.CASCADE)
     message_text = models.CharField(max_length=2000)
     date_time = models.CharField(max_length=255)
+    is_spam = models.CharField(max_length=10,default='pending')
 
 class Feedback(models.Model):
     USER=models.ForeignKey(User,on_delete=models.CASCADE)

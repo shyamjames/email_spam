@@ -49,13 +49,20 @@ def raise_complaint(request):
         subject = request.POST['dropdown_selection']
         complaint = request.POST['complaint_text']
         q = Complaint(complaint_text=complaint,subject=subject,date_time=date,USER_id=request.session['user_id'],response='pending')
+        q.save()
     return render(request,'public_pages/raise_complaint.html')
 
 def submit_message(request):
+    date = datetime.datetime.now()
+    if 'submit' in request.POST:
+        message = request.POST['message_text']
+        q = Message(USER_id=request.session['user_id'],message_text=message,date_time=date)
+        q.save()
     return render(request,'public_pages/submit_message.html')
 
 def view_history(request):
-    return render(request, 'public_pages/view_history.html')
+    q1 = Message.objects.filter(USER_id=request.session['user_id'])
+    return render(request, 'public_pages/view_history.html',{'q1':q1})
 
 def admin_home(request):
     return render(request,'admin_pages/admin_home.html')
@@ -65,3 +72,11 @@ def user_home(request):
 
 def password_reset(request):
     return render(request,'public_pages/password_reset.html')
+
+def feedback(request):
+    date = datetime.datetime.now()
+    if 'submit' in request.POST:
+        feedback = request.POST['feedback_text']
+        q = Feedback(USER_id=request.session['user_id'],feedback_text=feedback,date_time=date)
+        q.save()
+    return render(request,'public_pages/feedback.html')
