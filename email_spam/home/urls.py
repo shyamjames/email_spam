@@ -26,4 +26,5 @@ urlpatterns = [
   path('view_history',views.view_history),
   path('admin_home',views.admin_home),
   path('user_home',views.user_home),
+  path('password_reset',views.password_reset),
 ]

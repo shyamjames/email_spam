@@ -56,3 +56,6 @@ def admin_home(request):
 
 def user_home(request):
     return render(request,'public_pages/user_home.html')
+
+def password_reset(request):
+    return render(request,'public_pages/password_reset.html')
