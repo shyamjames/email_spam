@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from home.models import *
 import datetime
 # Create your views here.
@@ -65,8 +65,15 @@ def view_history(request):
     q1 = Message.objects.filter(USER_id=request.session['user_id'])     
     return render(request, 'public_pages/submit_message.html',{'q1':q1})
 
-def update_message(request):
-    return render(request,'public_pages/submit_message.html')
+def update_message(request,id):
+    q1 = Message.objects.filter(USER_id=request.session['user_id'])
+    q = Message.objects.get(id=id)
+    if 'update' in request.POST:
+        message = request.POST['message_text']
+        q.message_text=message
+        q.save()
+        return HttpResponse("<script>alert('updated Successful');window.location='/submit_message'</script>")
+    return render(request,'public_pages/submit_message.html',{'q':q,'q1':q1 })
 
 def delete_message(request,id):
     q = Message.objects.get(id=id)
@@ -93,3 +100,8 @@ def feedback(request):
 
 def user_header(request):
     return render(request,'public_pages/user_header.html')
+
+def logout(request):
+    del request.session['user_id']
+    request.session.flush()
+    return redirect('login')

@@ -30,4 +30,5 @@ urlpatterns = [
   path('user_header',views.user_header),
   path('update_message/<id>',views.update_message),
   path('delete_message/<id>',views.delete_message),
+  path('logout',views.logout)
 ]
