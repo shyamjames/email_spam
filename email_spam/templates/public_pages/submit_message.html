@@ -28,6 +28,27 @@
         <br>
         <h4 class="text-center">The message is likely to be</h4>
     </div>
+<br>
+    <div class="container shadow-lg p-3">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-8 card p-3">
+                <div>
+                    <h3 class="text-center">Update Message</h3>
+                    <form method="post">
+                        <br>
+                        <label class="form-label" for="message_text">Enter the message here:</label>
+                        <br>
+                        <textarea class="form-control" name="message_text"></textarea>
+                        <br>
+                        <input type="submit" class="btn btn-primary" name="update" value="Update">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h4 class="text-center">The message is likely to be</h4>
+    </div>
+
     <br>
     <br><br>
     <br><br>
@@ -57,22 +78,16 @@
                 </tr>
             </thead>
             <tbody>
+                {% for i in q1 %}
                 <tr>
-                    <th scope="row">1</th>
-                    <td>12:02:2024</td>
-                    <td><textarea class="textarea w-100">Dummy Text</textarea></td>
-                    <td>Spam</td>
-                    <td><button class="btn btn-primary">Update</button></td>
-                    <td><button class="btn btn-danger">Delete</button></td>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{i.date_time}}</td>
+                    <td>{{i.message_text}}</td>
+                    <td>{{i.is_spam}}</td>
+                    <td><a class="btn btn-primary" href="update_message">Update</a></td>
+                    <td><a class="btn btn-danger" href="/delete_message/{{i.id}}">Delete</a></td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>12:02:2024</td>
-                    <td><textarea class="textarea w-100">Dummy Text 2</textarea></td>
-                    <td>Not Spam</td>
-                    <td><button class="btn btn-primary">Update</button></td>
-                    <td><button class="btn btn-danger">Delete</button></td>
-                </tr>
+    {% endfor %}
             </tbody>
         </table>
     </div>

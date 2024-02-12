@@ -20,7 +20,7 @@ def login(request):
             elif q.usertype=='user':
                 f = User.objects.get(LOGIN_id = q.pk)
                 if f:
-                    request.session['userid'] = f.pk
+                    request.session['user_id'] = f.pk
                     return HttpResponse("<script>alert('Login Success');window.location='user_home'</script>")
             else:
                 return HttpResponse("<script>alert('Invalid Login');</script>")
@@ -39,7 +39,7 @@ def registration(request):
         q = Login(username=username,password=password,usertype='user')
         q.save()
         f = User(firstname=fname,lastname=lname,email=email,phone=phone,photo=photo,LOGIN_id=q.pk)
-        f.save()
+        f.save()    
         return HttpResponse("<script>alert('Registration Successful');window.location='login'</script>")
     return render(request,'public_pages/registration.html')
 
@@ -54,15 +54,25 @@ def raise_complaint(request):
 
 def submit_message(request):
     date = datetime.datetime.now()
+    q1 = Message.objects.filter(USER_id=request.session['user_id'])
     if 'submit' in request.POST:
         message = request.POST['message_text']
         q = Message(USER_id=request.session['user_id'],message_text=message,date_time=date)
         q.save()
-    return render(request,'public_pages/submit_message.html')
+    return render(request,'public_pages/submit_message.html',{'q1':q1})
 
 def view_history(request):
-    q1 = Message.objects.filter(USER_id=request.session['user_id'])
-    return render(request, 'public_pages/view_history.html',{'q1':q1})
+    q1 = Message.objects.filter(USER_id=request.session['user_id'])     
+    return render(request, 'public_pages/submit_message.html',{'q1':q1})
+
+def update_message(request):
+    return render(request,'public_pages/submit_message.html')
+
+def delete_message(request,id):
+    q = Message.objects.get(id=id)
+    q.delete()
+    return HttpResponse("<script>alert('Deletion Successful');window.location='/submit_message'</script>")
+    
 
 def admin_home(request):
     return render(request,'admin_pages/admin_home.html')
