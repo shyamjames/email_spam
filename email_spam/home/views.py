@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from home.models import *
 import datetime
 # Create your views here.
@@ -104,4 +104,4 @@ def user_header(request):
 def logout(request):
     del request.session['user_id']
     request.session.flush()
-    return redirect('login')
+    return HttpResponse("<script>window.location='/login'</script>")
