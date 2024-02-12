@@ -27,4 +27,5 @@ urlpatterns = [
   path('admin_home',views.admin_home),
   path('user_home',views.user_home),
   path('password_reset',views.password_reset),
+  path('user_header',views.user_header),
 ]

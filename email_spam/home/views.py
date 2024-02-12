@@ -80,3 +80,6 @@ def feedback(request):
         q = Feedback(USER_id=request.session['user_id'],feedback_text=feedback,date_time=date)
         q.save()
     return render(request,'public_pages/feedback.html')
+
+def user_header(request):
+    return render(request,'public_pages/user_header.html')
