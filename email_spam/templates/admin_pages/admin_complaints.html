@@ -37,6 +37,9 @@
                     <th>
                         Resolve
                     </th>
+                    <th>
+                        Delete
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -49,7 +52,8 @@
                         <td>{{i.subject}}</td>
                         <td>{{i.complaint_text}}</td>
                         <td>{{i.response}}</td>
-                        <td><a class="btn btn-primary" href="/admin_complaints/{{i.id}}" name="resolve" >Resolve</a></td>
+                        <td><a class="btn btn-primary" href="/admin_resolve_complaint/{{i.id}}" name="resolve" >Resolve</a></td>
+                        <td><a class="btn btn-danger" href="/admin_complaint_delete/{{i.id}}" name="delete">Delete</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -44,14 +44,19 @@ def registration(request):
     return render(request,'public_pages/registration.html')
 
 def raise_complaint(request):
+    q1 = Complaint.objects.filter(USER_id=request.session['user_id'])
     date = datetime.datetime.now()
     if 'submit' in request.POST:
         subject = request.POST['subject']
         complaint = request.POST['complaint_text']
         q = Complaint(complaint_text=complaint,subject=subject,date_time=date,USER_id=request.session['user_id'],response='pending')
         q.save()
-        return HttpResponse("<script>alert('Complaint added succesfully';window.location='raise_complaint')</script>")
-    return render(request,'public_pages/raise_complaint.html')
+        return HttpResponse("<script>alert('Complaint added succesfully');window.location='/raise_complaint'</script>")
+    return render(request,'public_pages/raise_complaint.html',{'q1':q1})
+
+# def view_complaints(request):
+#     q1 = Complaint.objects.filter(USER_id=request.session['user_id'])
+#     return render(request,'public_pages/raise_complaint.html',{'q1':q1})
 
 def submit_message(request):
     date = datetime.datetime.now()
@@ -120,6 +125,11 @@ def admin_resolve_complaint(request,id):
         q.save()
         return HttpResponse("<script>alert('Resolve Success');window.location='/admin_complaints'</script>")
     return render(request,'admin_pages/admin_resolve_complaint.html')
+
+def admin_complaint_delete(request, id):
+    q = Complaint.objects.get(id=id)
+    q.delete()
+    return HttpResponse("<script>alert('Deletion Successful');window.location='/admin_complaints'</script>")
 
 def admin_feedback(request):
     q1 = Feedback.objects.all
