@@ -46,10 +46,11 @@ def registration(request):
 def raise_complaint(request):
     date = datetime.datetime.now()
     if 'submit' in request.POST:
-        subject = request.POST['dropdown_selection']
+        subject = request.POST['subject']
         complaint = request.POST['complaint_text']
         q = Complaint(complaint_text=complaint,subject=subject,date_time=date,USER_id=request.session['user_id'],response='pending')
         q.save()
+        return HttpResponse("<script>alert('Complaint added succesfully';window.location='raise_complaint')</script>")
     return render(request,'public_pages/raise_complaint.html')
 
 def submit_message(request):
@@ -105,3 +106,16 @@ def logout(request):
     del request.session['user_id']
     request.session.flush()
     return HttpResponse("<script>window.location='/login'</script>")
+
+def admin_complaints(request):
+    q1 = Complaint.objects.all
+    return render(request,'admin_pages/admin_complaints.html',{'q1':q1})
+
+def admin_resolve_complaint(request):
+    q = Complaint.objects.get(id=id)
+    if 'resolve' in request.POST:
+        response = request.POST['textarea']
+        q.response = response
+        q.save()
+        return HttpResponse("<script>alert('Resolve Success');window.location='/admin_resolve_complaint'</script>")
+    return render(request,'admin_pages/admin_complaints.html')
