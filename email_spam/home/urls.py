@@ -22,6 +22,7 @@ urlpatterns = [
   path('login',views.login),
   path('registration',views.registration),
   path('raise_complaint',views.raise_complaint),
+  path('feedback',views.feedback),
   path('submit_message',views.submit_message),
   path('view_history',views.view_history),
   path('admin_home',views.admin_home),
@@ -33,4 +34,5 @@ urlpatterns = [
   path('logout',views.logout),
   path('admin_complaints',views.admin_complaints),
   path('admin_resolve_complaint/<id>',views.admin_resolve_complaint),
+  path('admin_feedback',views.admin_feedback),
 ]

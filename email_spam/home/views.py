@@ -97,6 +97,7 @@ def feedback(request):
         feedback = request.POST['feedback_text']
         q = Feedback(USER_id=request.session['user_id'],feedback_text=feedback,date_time=date)
         q.save()
+        return HttpResponse("<script>alert('Feedback Success');window.location='feedback'</script>")
     return render(request,'public_pages/feedback.html')
 
 def user_header(request):
@@ -119,3 +120,7 @@ def admin_resolve_complaint(request,id):
         q.save()
         return HttpResponse("<script>alert('Resolve Success');window.location='/admin_complaints'</script>")
     return render(request,'admin_pages/admin_resolve_complaint.html')
+
+def admin_feedback(request):
+    q1 = Feedback.objects.all
+    return render(request,'admin_pages/admin_feedback.html',{'q1':q1})
