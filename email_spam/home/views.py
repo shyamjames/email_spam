@@ -111,11 +111,11 @@ def admin_complaints(request):
     q1 = Complaint.objects.all
     return render(request,'admin_pages/admin_complaints.html',{'q1':q1})
 
-def admin_resolve_complaint(request):
+def admin_resolve_complaint(request,id):
     q = Complaint.objects.get(id=id)
     if 'resolve' in request.POST:
-        response = request.POST['textarea']
+        response = request.POST['response']
         q.response = response
         q.save()
-        return HttpResponse("<script>alert('Resolve Success');window.location='/admin_resolve_complaint'</script>")
-    return render(request,'admin_pages/admin_complaints.html')
+        return HttpResponse("<script>alert('Resolve Success');window.location='/admin_complaints'</script>")
+    return render(request,'admin_pages/admin_resolve_complaint.html')

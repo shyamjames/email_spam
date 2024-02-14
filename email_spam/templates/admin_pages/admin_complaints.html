@@ -9,6 +9,7 @@
 <body>
     <div class="container card p-3 shadow-lg">
         <h4 class="text-center">Complaints</h4>
+        <br>
         <table class="table table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -44,10 +45,10 @@
                         <th scope="row">{{i.id}}</th>
                         <td>{{i.date_time}}</td>
                         <td>{{i.USER_id}}</td>
-                        <td></td>
+                        <td>{{i.USER.firstname}} {{i.USER.lastname}}</td>
                         <td>{{i.subject}}</td>
                         <td>{{i.complaint_text}}</td>
-                        <td><textarea name="textarea" placeholder="{{i.response}}"></textarea></td>
+                        <td>{{i.response}}</td>
                         <td><a class="btn btn-primary" href="/admin_complaints/{{i.id}}" name="resolve" >Resolve</a></td>
                     </tr>
                 {% endfor %}

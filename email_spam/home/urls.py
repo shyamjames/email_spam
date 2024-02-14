@@ -32,4 +32,5 @@ urlpatterns = [
   path('delete_message/<id>',views.delete_message),
   path('logout',views.logout),
   path('admin_complaints',views.admin_complaints),
+  path('admin_resolve_complaint/<id>',views.admin_resolve_complaint),
 ]
