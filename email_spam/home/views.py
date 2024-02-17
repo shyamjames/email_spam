@@ -90,6 +90,9 @@ def delete_message(request,id):
 def admin_home(request):
     return render(request,'admin_pages/admin_home.html')
 
+def admin_header(request):
+    return render(request,'admin_pages/admin_header.html')
+
 def user_home(request):
     return render(request,'public_pages/user_home.html')
 

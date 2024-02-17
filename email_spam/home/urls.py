@@ -36,4 +36,5 @@ urlpatterns = [
   path('admin_resolve_complaint/<id>',views.admin_resolve_complaint),
   path('admin_complaint_delete/<id>',views.admin_complaint_delete),
   path('admin_feedback',views.admin_feedback),
+  path('admin_header',views.admin_header),
 ]
