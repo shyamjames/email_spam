@@ -102,9 +102,6 @@ def admin_footer(request):
 def user_footer(request):
     return render(request,'public_pages/user_footer.html')
 
-def password_reset(request):
-    return render(request,'public_pages/password_reset.html')
-
 def feedback(request):
     date = datetime.datetime.now()
     if 'submit' in request.POST:

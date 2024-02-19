@@ -27,7 +27,6 @@ urlpatterns = [
   path('view_history',views.view_history),
   path('admin_home',views.admin_home),
   path('user_home',views.user_home),
-  path('password_reset',views.password_reset),
   path('user_header',views.user_header),
   path('update_message/<id>',views.update_message),
   path('delete_message/<id>',views.delete_message),
