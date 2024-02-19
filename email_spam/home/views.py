@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from home.models import *
 import datetime
@@ -140,3 +140,41 @@ def admin_complaint_delete(request, id):
 def admin_feedback(request):
     q1 = Feedback.objects.all
     return render(request,'admin_pages/admin_feedback.html',{'q1':q1})
+
+
+
+
+
+
+# ---------------------------------------android--------------------------------------
+
+def login_and(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    if Login.objects.filter(username=username,password=password).exists():
+        q = Login.objects.get(username=username,password=password)
+        lid = q.pk()
+        if q.usertype == 'user':
+            m = User.objects.get(LOGIN_id=lid)
+            if m:
+                uid = m.pk()
+                return JsonResponse({'status':'ok','lid':lid,'uid':uid})
+            else:
+                return JsonResponse({'status':'no'})
+    else:
+        return JsonResponse({'status':'ok'})
+    
+
+def reg_and(request):
+    firstname = request.POST['firstname']
+    lastname = request.POST['lastname']
+    username = request.POST['username']
+    email = request.POST['email']
+    phone = request.POST['phone']
+    password = request.POST['password']
+    photo = request.FILE['photo']
+    q = Login(username = username,password = password,usertype='user')
+    q.save()
+    r = User(firstname=firstname,lastname=lastname,email=email,phone=phone,photo=photo,LOGIN_id=q.pk())
+    r.save()
+    return JsonResponse({'status':'ok'})
