@@ -37,4 +37,6 @@ urlpatterns = [
   path('admin_complaint_delete/<id>',views.admin_complaint_delete),
   path('admin_feedback',views.admin_feedback),
   path('admin_header',views.admin_header),
+  path('admin_footer',views.admin_footer),
+  path('user_footer',views.user_footer),
 ]

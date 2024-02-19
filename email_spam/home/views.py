@@ -96,6 +96,12 @@ def admin_header(request):
 def user_home(request):
     return render(request,'public_pages/user_home.html')
 
+def admin_footer(request):
+    return render(request,'admin_pages/admin_footer.html')
+
+def user_footer(request):
+    return render(request,'public_pages/user_footer.html')
+
 def password_reset(request):
     return render(request,'public_pages/password_reset.html')
 
