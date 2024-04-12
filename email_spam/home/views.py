@@ -9,7 +9,7 @@ def public_home(request):
 
 def login(request):
     if 'submit' in request.POST:
-        uname = request.POST['username']
+        uname = request.POST['Name']
         passwd = request.POST['password']
         if Login.objects.filter(username=uname,password=passwd).exists():
             q = Login.objects.get(username=uname, password=passwd)
@@ -24,6 +24,9 @@ def login(request):
                     return HttpResponse("<script>alert('Login Success');window.location='user_home'</script>")
             else:
                 return HttpResponse("<script>alert('Invalid Login');</script>")
+        else:
+            
+            return HttpResponse("<script>alert('Invalid Login');</script>")
 
     return render(request,'public_pages/login.html')
 
@@ -85,7 +88,13 @@ def delete_message(request,id):
     q = Message.objects.get(id=id)
     q.delete()
     return HttpResponse("<script>alert('Deletion Successful');window.location='/submit_message'</script>")
+
+def view_user(request):
     
+    data=User.objects.all()
+    return render(request,'admin_pages/viewuser.html',{'data':data})
+   
+
 
 def admin_home(request):
     return render(request,'admin_pages/admin_home.html')
@@ -115,7 +124,7 @@ def user_header(request):
     return render(request,'public_pages/user_header.html')
 
 def logout(request):
-    del request.session['user_id']
+    # del request.session['user_id']
     request.session.flush()
     return HttpResponse("<script>window.location='/login'</script>")
 
@@ -153,28 +162,120 @@ def login_and(request):
     password = request.POST['password']
     if Login.objects.filter(username=username,password=password).exists():
         q = Login.objects.get(username=username,password=password)
-        lid = q.pk()
+        lid = q.pk
         if q.usertype == 'user':
             m = User.objects.get(LOGIN_id=lid)
             if m:
-                uid = m.pk()
+                uid = m.pk
                 return JsonResponse({'status':'ok','lid':lid,'uid':uid})
             else:
                 return JsonResponse({'status':'no'})
     else:
-        return JsonResponse({'status':'ok'})
+        return JsonResponse({'status':'no'})
     
 
-def reg_and(request):
-    firstname = request.POST['firstname']
-    lastname = request.POST['lastname']
+def signup_and(request):
+    firstname = request.POST['fname']
+    lastname = request.POST['lname']
     username = request.POST['username']
     email = request.POST['email']
     phone = request.POST['phone']
     password = request.POST['password']
-    photo = request.FILE['photo']
+    photo = request.POST['photo']
+    import base64
+
+    b=base64.b64decode(photo)
+    import datetime
+    d=datetime.datetime.now().strftime("%y%m%d%H%M%S")+".jpg"
+    with open("C:\\Users\\shyam\\Desktop\\email_spam_recognition\\email_spam\\static\\user\\"+d,"wb") as f:
+        f.write(b)
+        f.close()
     q = Login(username = username,password = password,usertype='user')
     q.save()
-    r = User(firstname=firstname,lastname=lastname,email=email,phone=phone,photo=photo,LOGIN_id=q.pk())
+    path="/static/user/"+d
+    r = User(firstname=firstname,lastname=lastname,email=email,phone=phone,photo=path,LOGIN_id=q.pk)
     r.save()
     return JsonResponse({'status':'ok'})
+
+
+def feeedback_and(request):
+    feedback = request.POST['feedback']
+    lid = request.POST['lid']
+    user=User.objects.get(LOGIN_id=lid)
+    da=datetime.datetime.now()
+    Fa=Feedback()
+    Fa.feedback_text=feedback
+    Fa.date_time=da
+    Fa.USER=user
+    Fa.save()
+    return JsonResponse({'status':'ok'})
+   
+def complaint_and(request):
+    feedback = request.POST['complaint']
+    subject = request.POST['subject']
+    lid = request.POST['lid']
+    user=User.objects.get(LOGIN_id=lid)
+    da=datetime.datetime.now()
+    Fa=Complaint()
+    Fa.complaint_text=feedback
+    Fa.date_time=da
+    Fa.USER=user
+    Fa.response="Pending"
+    Fa.subject=subject
+    Fa.save()
+    return JsonResponse({'status':'ok'})
+
+def reply_and(request):
+    lid = request.POST['lid']
+    user=User.objects.get(LOGIN_id=lid)
+    data=[]
+    cc=Complaint.objects.filter(USER=user)
+    for i in cc:
+        data.append({"complaint_id":i.id,"complaint":i.complaint_text,"status":i.subject,"date":i.date_time,"reply":i.response,'user_id':i.USER.id})
+    return JsonResponse({'status':'ok',"data":data})
+
+def predict_and(request):
+    lid = request.POST['lid']
+    text = request.POST['text']
+    print(text)
+    user=User.objects.get(LOGIN_id=lid)
+    from textblob.classifiers import NaiveBayesClassifier
+    import pandas
+
+    var = r"C:\Users\shyam\Desktop\email_spam_recognition\email_spam\static\spamham.csv"
+
+    pd = pandas.read_csv(var)
+
+    x = pd.values[:1000, :]
+
+    train = []
+
+    for i in x:
+        train.append((i[1], i[0]))
+
+    a = NaiveBayesClassifier(train)
+
+    s = a.classify(text)
+    da=datetime.datetime.now()
+    print(s)
+    if Message.objects.filter(USER=user,is_spam=s,message_text=text).exists():
+        pass
+    else:
+        Fa=Message()
+        Fa.message_text=text
+        Fa.date_time=da
+        Fa.USER=user
+        Fa.is_spam=s
+        Fa.save()
+    return JsonResponse({'status':'ok',"result":"This is likely to be "+ s})
+
+
+
+def msgs_and(request):
+    lid = request.POST['lid']
+    user=User.objects.get(LOGIN_id=lid)
+    data=[]
+    cc=Message.objects.filter(USER=user)
+    for i in cc:
+        data.append({"complaint_id":i.id,"complaint":i.message_text,"status":i.is_spam,"date":i.date_time,"reply":i.is_spam,'user_id':i.USER.id})
+    return JsonResponse({'status':'ok',"data":data})

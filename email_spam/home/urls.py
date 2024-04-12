@@ -35,8 +35,17 @@ urlpatterns = [
   path('admin_complaints',views.admin_complaints),
   path('admin_resolve_complaint/<id>',views.admin_resolve_complaint),
   path('admin_complaint_delete/<id>',views.admin_complaint_delete),
+  path("view_user/",views.view_user),
   path('admin_feedback',views.admin_feedback),
   path('admin_header',views.admin_header),
   path('admin_footer',views.admin_footer),
   path('user_footer',views.user_footer),
+
+    path("signup_and",views.signup_and),
+    path("login_and",views.login_and),
+    path("complaint_and",views.complaint_and),
+    path("feedback_and",views.feeedback_and),
+    path("reply_and",views.reply_and),
+    path("predict_and",views.predict_and),
+    path("msgs_and",views.msgs_and)
 ]

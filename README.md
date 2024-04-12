@@ -1,1 +1,6 @@
-This is an Email Spam Recongnition System that uses sophisticated  machine learning algorithms
+Shyam James | St Thomas College, Palai
+
+TO-DO:
+Algorithms
+Admin and User dashboards
+Android(user-only)

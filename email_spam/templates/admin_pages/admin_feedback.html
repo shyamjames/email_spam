@@ -14,16 +14,16 @@
         <table class="table table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th class="col active-table">
+                    <th class="col" style="width: 100px;">
                         Feedback ID
                     </th>
-                    <th class="col">
+                    <th class="col" style="width: 200px;">
                         Time
                     </th>
-                    <th class="col">
+                    <!-- <th class="col" style="width: 200px;">
                         UserID
-                    </th>
-                    <th class="col">
+                    </th> -->
+                    <th class="col" style="width: 400px;">
                         Username
                     </th>
                     <th class="col">
@@ -36,7 +36,7 @@
                     <tr>
                         <th scope="row">{{i.id}}</th>
                         <td>{{i.date_time}}</td>
-                        <td>{{i.USER_id}}</td>
+                        <!-- <td>{{i.USER_id}}</td> -->
                         <td>{{i.USER.firstname}} {{i.USER.lastname}}</td>
                         <td>{{i.feedback_text}}</td>
                     </tr>
