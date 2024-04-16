@@ -9,7 +9,7 @@ def public_home(request):
 
 def login(request):
     if 'submit' in request.POST:
-        uname = request.POST['Name']
+        uname = request.POST['username']
         passwd = request.POST['password']
         if Login.objects.filter(username=uname,password=passwd).exists():
             q = Login.objects.get(username=uname, password=passwd)
@@ -61,14 +61,53 @@ def raise_complaint(request):
 #     q1 = Complaint.objects.filter(USER_id=request.session['user_id'])
 #     return render(request,'public_pages/raise_complaint.html',{'q1':q1})
 
+# def submit_message(request):
+#     date = datetime.datetime.now()
+#     q1 = Message.objects.filter(USER_id=request.session['user_id'])
+#     if 'submit' in request.POST:
+#         message = request.POST['message_text']
+#         q = Message(USER_id=request.session['user_id'],message_text=message,date_time=date)
+#         q.save()
+    
+#     return render(request,'public_pages/submit_message.html',{'q1':q1})
+
 def submit_message(request):
     date = datetime.datetime.now()
     q1 = Message.objects.filter(USER_id=request.session['user_id'])
     if 'submit' in request.POST:
-        message = request.POST['message_text']
-        q = Message(USER_id=request.session['user_id'],message_text=message,date_time=date)
-        q.save()
-    return render(request,'public_pages/submit_message.html',{'q1':q1})
+        text = request.POST['message_text']
+
+        from textblob.classifiers import NaiveBayesClassifier
+        import pandas
+
+        var = r"C:\Users\shyam\Desktop\email_spam_recognition\email_spam\static\spamham.csv"
+
+        pd = pandas.read_csv(var)
+
+        x = pd.values[:1000, :]
+
+        train = []
+
+        for i in x:
+            train.append((i[1], i[0]))
+
+        a = NaiveBayesClassifier(train)
+
+        s = a.classify(text)
+        da = date
+        print(s)
+        if Message.objects.filter(USER_id=request.session['user_id'], is_spam=s, message_text=text).exists():
+            pass
+        else:
+            Fa = Message()
+            Fa.message_text = text
+            Fa.date_time = da
+            Fa.USER_id = request.session['user_id']
+            Fa.is_spam = s
+            Fa.save()
+        
+
+    return render(request, 'public_pages/submit_message.html', {'q1': q1})
 
 def view_history(request):
     q1 = Message.objects.filter(USER_id=request.session['user_id'])     
@@ -89,15 +128,20 @@ def delete_message(request,id):
     q.delete()
     return HttpResponse("<script>alert('Deletion Successful');window.location='/submit_message'</script>")
 
-def view_user(request):
-    
-    data=User.objects.all()
-    return render(request,'admin_pages/viewuser.html',{'data':data})
+# def view_user(request):
+#     data=User.objects.all()
+#     return render(request,'admin_pages/viewuser.html',{'data':data})
+
+def admin_user_delete(request, id):
+    q = User.objects.get(id=id)
+    q.delete()
+    return HttpResponse("<script>alert('Deletion Successful');window.location='/admin_home'</script>")
    
 
 
 def admin_home(request):
-    return render(request,'admin_pages/admin_home.html')
+    data = User.objects.all()
+    return render(request,'admin_pages/admin_home.html',{'data':data})
 
 def admin_header(request):
     return render(request,'admin_pages/admin_header.html')
@@ -129,7 +173,7 @@ def logout(request):
     return HttpResponse("<script>window.location='/login'</script>")
 
 def admin_complaints(request):
-    q1 = Complaint.objects.all
+    q1 = Complaint.objects.all().order_by('-date_time')
     return render(request,'admin_pages/admin_complaints.html',{'q1':q1})
 
 def admin_resolve_complaint(request,id):

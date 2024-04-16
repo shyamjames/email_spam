@@ -8,6 +8,33 @@
     {%include 'admin_pages/admin_header.html'%}
 </head>
 <body>
+    <br><br><br><br>
+
+      <div class="container card p-3 shadow-lg">
+        <h4 class="text-center">Users</h4>
+        <br>
+        <table class="table table-bordered table-hover">
+            <tr>
+              <th width="8" scope="col">Sl. No.</th>
+              <th width="55" scope="col">Name</th>
+              <th width="42" scope="col">Phone</th>
+              <th width="68" scope="col">Email</th>
+              <th width="68" scope="col">Photo</th>
+              <th width="68" scope="col">Action</th>
+            </tr>
+              {% for i in data %}
+            <tr>
+              <td>&nbsp;{{ forloop.counter }}</td>
+              <td>&nbsp;{{ i.firstname }} {{i.lastname}}</td>
+          
+              <td>&nbsp;{{ i.phone }}</td>
+              <td>&nbsp;{{ i.email }}</td>
+              <td><img src="{{ i.photo }}" alt="" height="40px" width="40px"/></td>
+              <td><a class="btn btn-danger" href="/admin_user_delete/{{i.id}}" name="delete">Delete</a></td>
+            </tr>
+              {% endfor %}
+          </table>
+    </div>
     {%include 'admin_pages\admin_footer.html'%}
 </body>
 </html>
