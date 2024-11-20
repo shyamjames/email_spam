@@ -1,6 +1,1 @@
-Shyam James | St Thomas College, Palai
-
-TO-DO:
-Algorithms
-Admin and User dashboards
-Android(user-only)
+An email spam detection system using Python and Naive Bayes classifier.
